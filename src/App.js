@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import "./App.css";
 import BottomRow from "./BottomRow";
-import topRow from "./Toprow";
-
+import TopRow from "./Toprow";
+import ButtonRow from './buttons'
 
 // import ButtonRow from './buttons';
 
@@ -29,36 +29,11 @@ function App() {
   return (
     <div className="container">
       <section className="scoreboard">
-        {/* <topRow home = {home} away = {away} /> */}
-        <div className="topRow">
-          <div className="home">
-            <h2 className="home__name">Lions</h2>
-
-
-         <div className="home__score">{home}</div>
-          </div>
-          <div className="timer">00:03</div>
-          <div className="away">
-            <h2 className="away__name">Tigers</h2>
-            <div className="away__score">{away}</div>
-          </div>
-        </div>
-        
-       
+        <TopRow home = {home} away = {away} />
         <BottomRow />
       </section>
-      {/* <ButtonRow /> */}
-      <section className="buttons">
-        <div className="homeButtons">
-         
-          <button onClick = {tdhome} className="homeButtons__touchdown">Home Touchdown</button>
-          <button onClick = {fghome} className="homeButtons__fieldGoal">Home Field Goal</button>
-        </div>
-        <div className="awayButtons">
-          <button onClick = {tdaway} className="awayButtons__touchdown">Away Touchdown</button>
-          <button onClick = {fgaway} className="awayButtons__fieldGoal">Away Field Goal</button>
-        </div>
-      </section>
+      <ButtonRow tdhome = {tdhome} tdaway = {tdaway} fgaway = {fgaway} fghome = {fghome}  />
+      
     </div>
   );
 }
