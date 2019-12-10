@@ -17,6 +17,7 @@ function App() {
   const [ballOn, setBallOn] = useState(0);
 
   const [seconds, setSeconds] = useState(0);
+  const [tenthseconds,setTenthSeconds] = useState(0)
   const [isActive, setIsActive] = useState(false);
   
     function toggle() {
@@ -24,6 +25,7 @@ function App() {
     }
   
     function reset() {
+      setTenthSeconds(0)
       setSeconds(0);
       setIsActive(false);
     }
@@ -32,13 +34,25 @@ function App() {
       let interval = null;
       if (isActive) {
         interval = setInterval(() => {
-          setSeconds(seconds => seconds + 1);
+          setSeconds((seconds) =>  (seconds < 9) ? seconds +1 : seconds = 0);
         }, 1000);
       } else if (!isActive && seconds !== 0) {
         clearInterval(interval);
       }
       return () => clearInterval(interval);
     }, [isActive, seconds]);
+
+    useEffect(() => {
+      let interval = null;
+      if (isActive) {
+        interval = setInterval(() => {
+          setTenthSeconds((tenthseconds) =>  (tenthseconds < 9) ? tenthseconds +1 : tenthseconds = 0 );
+        }, 10000);
+      } else if (!isActive && tenthseconds !== 0) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }, [isActive, tenthseconds]);
   
 
 
@@ -79,7 +93,7 @@ function App() {
   return (
     <div className="container">
       <section className="scoreboard">
-        <TopRow home = {home} away = {away} seconds = {seconds}/>
+        <TopRow home = {home} away = {away} seconds = {seconds} tenthseconds = {tenthseconds}/>
         <BottomRow qt = {qt} quarter = {quarter} dwn = {dwn} down = {down} togo = {togo} 
         tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)} ballOn = {ballOn} Bo = {() =>{ (ballOn < 100) ? setBallOn(ballOn + 1) : setBallOn(0)}}/>
       </section>
