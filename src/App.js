@@ -12,14 +12,30 @@ function App() {
   const [home, setHome] = useState(0);
   const [away, setAway] = useState(0);
   const [quarter, setQuarter] = useState(0);
+  const [down, setDown] = useState(0);
+  const [togo, setTogo] = useState(10);
+
+
 
   const qt = () => {
-    if (quarter < 4){
-       setQuarter(quarter + 1)
-    }
-   
+    (quarter < 4) ? setQuarter(quarter + 1) : setQuarter(1) 
+  };
+
+
+  const dwn = () => {
+    (down < 4) ? setDown(down + 1) : setDown(1)
+
   }
-  
+  // const dwnn = setDown(down)
+
+
+ 
+  const tdawayextra = () => {
+    setAway(away + 1)
+  }
+  const tdhomeextra = () => {
+    setHome(home + 1)
+  }
   const tdaway = () => {
     setAway(away + 6)
   }
@@ -37,9 +53,11 @@ function App() {
     <div className="container">
       <section className="scoreboard">
         <TopRow home = {home} away = {away} />
-        <BottomRow qt = {qt} quarter = {quarter} />
+        <BottomRow qt = {qt} quarter = {quarter} dwn = {dwn} down = {down} togo = {togo} 
+        tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)}/>
       </section>
-      <ButtonRow tdhome = {tdhome} tdaway = {tdaway} fgaway = {fgaway} fghome = {fghome}  />
+      <ButtonRow tdhome = {tdhome} tdaway = {tdaway} fgaway = {fgaway} fghome = {fghome}
+      tdhomeextra = {tdhomeextra} tdawayextra = {tdawayextra} />
       </div>
   );
 }
