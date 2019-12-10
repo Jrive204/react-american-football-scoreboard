@@ -18,6 +18,7 @@ function App() {
 
   const [seconds, setSeconds] = useState(0);
   const [tenthseconds,setTenthSeconds] = useState(0)
+  const [minute, setMinute] = useState(0);
   const [isActive, setIsActive] = useState(false);
   
     function toggle() {
@@ -25,12 +26,37 @@ function App() {
     }
   
     function reset() {
+      setMinute(0)
       setTenthSeconds(0)
       setSeconds(0);
       setIsActive(false);
     }
-  
-    useEffect(() => {
+    
+    let min = useEffect(() => {
+      let interval = null;
+      if (isActive) {
+        interval = setInterval(() => {
+          setMinute((minute) =>  (minute < 9) ? minute +1 : minute = 0 );
+        }, 60000);
+      } else if (!isActive && minute !== 0) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }, [isActive, minute]);
+      
+   let tenthsec = useEffect(() => {
+      let interval = null;
+      if (isActive) {
+        interval = setInterval(() => {
+          setTenthSeconds((tenthseconds) =>  (tenthseconds < 5) ? tenthseconds +1 : tenthseconds = 0 );
+        }, 10000);
+      } else if (!isActive && tenthseconds !== 0) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }, [isActive, tenthseconds]);
+
+   let sec = useEffect(() => {
       let interval = null;
       if (isActive) {
         interval = setInterval(() => {
@@ -42,19 +68,7 @@ function App() {
       return () => clearInterval(interval);
     }, [isActive, seconds]);
 
-    useEffect(() => {
-      let interval = null;
-      if (isActive) {
-        interval = setInterval(() => {
-          setTenthSeconds((tenthseconds) =>  (tenthseconds < 9) ? tenthseconds +1 : tenthseconds = 0 );
-        }, 10000);
-      } else if (!isActive && tenthseconds !== 0) {
-        clearInterval(interval);
-      }
-      return () => clearInterval(interval);
-    }, [isActive, tenthseconds]);
-  
-
+   
 
 
 
@@ -93,7 +107,7 @@ function App() {
   return (
     <div className="container">
       <section className="scoreboard">
-        <TopRow home = {home} away = {away} seconds = {seconds} tenthseconds = {tenthseconds}/>
+        <TopRow home = {home} away = {away} seconds = {seconds} tenthseconds = {tenthseconds} minute = {minute}/>
         <BottomRow qt = {qt} quarter = {quarter} dwn = {dwn} down = {down} togo = {togo} 
         tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)} ballOn = {ballOn} Bo = {() =>{ (ballOn < 100) ? setBallOn(ballOn + 1) : setBallOn(0)}}/>
       </section>
