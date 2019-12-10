@@ -1,5 +1,5 @@
 //TODO: STEP 1 - Import the useState hook.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./App.css";
 import BottomRow from "./BottomRow";
 import TopRow from "./Toprow";
@@ -15,6 +15,31 @@ function App() {
   const [down, setDown] = useState(0);
   const [togo, setTogo] = useState(10);
   const [ballOn, setBallOn] = useState(0);
+
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  
+    function toggle() {
+      setIsActive(!isActive);
+    }
+  
+    function reset() {
+      setSeconds(0);
+      setIsActive(false);
+    }
+  
+    useEffect(() => {
+      let interval = null;
+      if (isActive) {
+        interval = setInterval(() => {
+          setSeconds(seconds => seconds + 1);
+        }, 1000);
+      } else if (!isActive && seconds !== 0) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }, [isActive, seconds]);
+  
 
 
 
@@ -54,12 +79,12 @@ function App() {
   return (
     <div className="container">
       <section className="scoreboard">
-        <TopRow home = {home} away = {away} />
+        <TopRow home = {home} away = {away} seconds = {seconds}/>
         <BottomRow qt = {qt} quarter = {quarter} dwn = {dwn} down = {down} togo = {togo} 
         tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)} ballOn = {ballOn} Bo = {() =>{ (ballOn < 100) ? setBallOn(ballOn + 1) : setBallOn(0)}}/>
       </section>
       <ButtonRow tdhome = {tdhome} tdaway = {tdaway} fgaway = {fgaway} fghome = {fghome}
-      tdhomeextra = {tdhomeextra} tdawayextra = {tdawayextra} />
+      tdhomeextra = {tdhomeextra} tdawayextra = {tdawayextra} toggle = {toggle} reset = {reset} isActive = {isActive} />
       </div>
   );
 }

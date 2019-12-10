@@ -12,7 +12,8 @@ const TopRow = (props) => {
 
    <div className="home__score">{props.home}</div>
     </div>
-    <div className="timer">00:03</div>
+    <div className="timer">{props.seconds}</div>
+   
     <div className="away">
       <h2 className="away__name">Tigers</h2>
       <div className="away__score">{props.away}</div>
