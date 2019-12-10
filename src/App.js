@@ -14,6 +14,8 @@ function App() {
   const [quarter, setQuarter] = useState(0);
   const [down, setDown] = useState(0);
   const [togo, setTogo] = useState(10);
+  const [ballOn, setBallOn] = useState(0);
+
 
 
 
@@ -54,7 +56,7 @@ function App() {
       <section className="scoreboard">
         <TopRow home = {home} away = {away} />
         <BottomRow qt = {qt} quarter = {quarter} dwn = {dwn} down = {down} togo = {togo} 
-        tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)}/>
+        tg = {() => (togo > 1) ? setTogo(togo - 1) : setTogo(10)} ballOn = {ballOn} Bo = {() =>{ (ballOn < 100) ? setBallOn(ballOn + 1) : setBallOn(0)}}/>
       </section>
       <ButtonRow tdhome = {tdhome} tdaway = {tdaway} fgaway = {fgaway} fghome = {fghome}
       tdhomeextra = {tdhomeextra} tdawayextra = {tdawayextra} />
