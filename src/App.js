@@ -60,7 +60,7 @@ function App() {
       let interval = null;
       if (isActive) {
         interval = setInterval(() => { //IF IF ELSE maybe ?? ill try later
-          setSeconds((seconds) =>  { if (seconds < 9) { return seconds +1 } else {  return seconds = 0} } );
+          setSeconds((seconds) =>  { if (seconds < 9) { return seconds +1 } else {  return seconds = 0 } } );
         }, 1000);
       } else if (!isActive && seconds !== 0) {
         clearInterval(interval);
